@@ -1,10 +1,15 @@
 package router
 
 import (
-	"fmt"
+	"api/controllers"
+	"encoding/json"
 	"net/http"
 )
 
-func Test(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Test")
+func GetAllBooks(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	for _, book := range controllers.GetAll() {
+		json.NewEncoder(w).Encode(book)
+	}
 }
