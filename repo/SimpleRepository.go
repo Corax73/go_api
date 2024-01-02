@@ -16,6 +16,14 @@ type Book struct {
 	Author string
 }
 
+type DataForCreatingBook struct {
+	Title string
+	Author string
+	Slug string
+	Description string
+	Cover string
+}
+
 func getConnect() *sql.DB {
 	db, err := sql.Open("mysql", "root:@/library")
 	if err == nil {
@@ -47,4 +55,18 @@ func GetBooks() []Book {
 		}
 	}
 	return books
+}
+
+func CreatingBook(data DataForCreatingBook) bool {
+	var resp bool
+	database = getConnect()
+	if database != nil {
+		queryStr := "INSERT INTO library.Books(title, author, slug, description, cover) VALUES (" + "'" + data.Title + "'" + ", " + "'" + data.Author + "'" + ", " + "'" + data.Slug + "'" + ", " + "'" + data.Description + "'" + ", " + "'" + data.Cover + "'" + ")"
+		rows, err := database.Query(queryStr)
+		if err == nil {
+			defer rows.Close()
+			resp = true
+		}
+	}
+	return resp
 }

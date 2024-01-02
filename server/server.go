@@ -7,7 +7,7 @@ import (
 )
 
 func Main() {
-	http.HandleFunc("/", router.GetAllBooks)
+	http.HandleFunc("/books", router.HandlerBooks)
 
 	err := http.ListenAndServe(":5000", nil)
 	if err != nil {
